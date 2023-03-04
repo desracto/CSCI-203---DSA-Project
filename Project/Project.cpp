@@ -5,7 +5,6 @@
 #include <sstream>
 #include <istream>
 
-
 // using namespace std;
 using std::cout;
 
@@ -33,7 +32,6 @@ void file_reader()
 		std::cout << arr[i];
 	}
 }
-
 
 void convert_to_array()
 {
