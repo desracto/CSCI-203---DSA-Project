@@ -35,6 +35,7 @@ void file_reader()
 
 }
 
+
 void convert_to_array()
 {
 	std::fstream file("map_844x480.dat", std::ios::in);
