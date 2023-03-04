@@ -32,7 +32,6 @@ void file_reader()
 	{
 		std::cout << arr[i];
 	}
-
 }
 
 
