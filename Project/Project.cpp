@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+using std::cout;
+using std::endl;
+
 std::vector<std::vector<int>> load_array_vec()
 {
 
@@ -23,7 +26,7 @@ std::vector<std::vector<int>> load_array_vec()
 	}
 	catch (std::exception& e)
 	{
-		std::cout << "EXCEPTION: " << e.what();
+		cout << "EXCEPTION: " << e.what();
 	}
 
 	return arr;
@@ -36,8 +39,8 @@ int calculate_path_cost(const std::vector<std::vector<int>>& arr, const std::vec
 	for (int i = 0; i < selected_points.size() - 1; i++)
 	{
 		// DEBUG PRINTS - remove later 
-		//std::cout << "First Point: " << arr[selected_points[i].first][selected_points[i].second] << " Y = " << selected_points[i].second << std::endl;
-		//std::cout << "Second Point: " << arr[selected_points[i + 1].first][selected_points[i + 1].second] << " Y = " << selected_points[i + 1].second << std::endl;
+		//cout << "First Point: " << arr[selected_points[i].first][selected_points[i].second] << " Y = " << selected_points[i].second << endl;
+		//cout << "Second Point: " << arr[selected_points[i + 1].first][selected_points[i + 1].second] << " Y = " << selected_points[i + 1].second << endl;
 
 		total_cost += abs(arr[selected_points[i].first][selected_points[i].second] - arr[selected_points[i + 1].first][selected_points[i + 1].second]);
 	}
@@ -46,22 +49,20 @@ int calculate_path_cost(const std::vector<std::vector<int>>& arr, const std::vec
 
 void print_coords(const std::vector < std::pair<int, int>>& selected_coords)
 {
-	std::cout << "Coordinates: " << std::endl;
+	cout << "Coordinates: " << endl;
 	for (int i = 0; i < selected_coords.size(); i++)
 	{
-		std::cout << " (" << selected_coords[i].first << "," << selected_coords[i].second << ")" << std::endl;
+		cout << " (" << selected_coords[i].first << "," << selected_coords[i].second << ")" << endl;
 	}
 }
 
-void sen1A()
+std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map)
 {
-    const int ROWS = 480;
-    const int COLUMNS = 844;
+    // Possible change: Check if matrix is square.
 
-    int map[ROWS][COLUMNS];
-
-    // load map into vector from file (tried adding here, made everything red, so ill leave that to you)
-    //above 2D matrix is just there so u understand my logic (if u can)
+    std::vector<std::pair<int, int>> selected_coords;
+    const int ROWS = map.size();
+    const int COLS = map[0].size();
 
     int currentRow = 2;
     int currentColumn = 0; // left most starting column
@@ -73,51 +74,60 @@ void sen1A()
     cout << "Start elevation: " << currentElev << endl;
 
     // loop through each column
-
-    for (int c = 1; c < COLUMNS; c++) // starting from the second column
+    for (int c = 1; c < COLS; c++) // starting from the second column
     {
-        int minDiff = abs(map[currentRow][c] - currentElev); // the difference between current locatio & forward location
+        // check FORWARD location
+        int minDiff = abs(map[currentRow][c] - currentElev); // the difference between current location & forward location
+        // DEBUG FORWARD: 
+        // std::cout << "Comparing forward: " << map[currentRow][c] << " Difference: " << minDiff << std::endl;
         int rowChosen = currentRow;
 
+        int upwardDiff = -1;
+        int downwardDiff = -1;
+
         // check UPWARD locations
-
-        if (currentRow > 0 && abs(map[currentRow - 1][c] - currentElev) < minDiff)
+        if (currentRow > 0)
         {
-            minDiff = abs(map[currentRow - 1][c] - currentElev);  // the difference between current locatio & upward location
-            rowChosen = currentRow - 1;
-        }
-
-        // check DOWNWARD locations
-
-        if (currentRow < ROWS - 1 && abs(map[currentRow + 1][c] - currentElev) < minDiff)
-        {
-            minDiff = abs(map[currentRow + 1][c] - currentElev); // the difference between current locatio & downward location
-            rowChosen = currentRow + 1;
-        }
-
-        // In case of a tie, a coin toss will be conducted.
-
-        if (currentRow > 0 && currentRow < ROWS - 1 && abs(map[currentRow - 1][c] - currentElev) == minDiff && abs(map[currentRow + 1][c] - currentElev) == minDiff)
-        {
-            int coinToss = rand() % 2; // random select between 0 or 1
-
-            if (coinToss == 0)
+            upwardDiff = abs(map[currentRow - 1][c] - currentElev); // the difference between current location & upward location
+            // DEBUG UPWARD:
+            // std::cout << "Comparing upward: " << map[currentRow - 1][c] << " Difference: " << upwardDiff << std::endl;
+            if (upwardDiff < minDiff)
             {
+                minDiff = upwardDiff;
                 rowChosen = currentRow - 1;
             }
-            else
+        }
+
+        // check DOWNWARD location
+        if (currentRow < ROWS - 1)
+        {
+            downwardDiff = abs(map[currentRow + 1][c] - currentElev); // the difference between current location & downward location
+            // DEBUG DOWNARD:
+            // std::cout << "Comparing downward: " << map[currentRow + 1][c] << " Difference: " << downwardDiff << std::endl;
+            if (downwardDiff < minDiff)
             {
+                minDiff = downwardDiff;
                 rowChosen = currentRow + 1;
             }
         }
-        else if (currentRow > 0 && abs(map[currentRow - 1][c] - currentElev) == minDiff)   //Hiba Note: starting from here, in my head, these 2 else ifs are necessary for testing, THINK they might be redundant as i already wrote b4, but
+
+        // In case of a tie of upward and downward, a coin toss will be conducted.
+        if (upwardDiff >= 0 && downwardDiff >= 0)
         {
-            rowChosen = currentRow - 1;
+            if (upwardDiff == downwardDiff)
+            {
+                int coinToss = rand() % 2; // random select between 0 or 1
+                if (coinToss == 0)
+                {
+                    rowChosen = currentRow - 1;
+                }
+                else
+                {
+                    rowChosen = currentRow + 1;
+                }
+            }
         }
-        else if (currentRow < ROWS - 1 && abs(map[currentRow + 1][c] - currentElev) == minDiff)
-        {
-            rowChosen = currentRow + 1;
-        }
+        // No code for if forward and up/down match, priority given to up/down direction
 
         // update current location and elevation
         currentRow = rowChosen;
@@ -128,17 +138,18 @@ void sen1A()
         cout << "Column " << c << ":\n";
         cout << "Current location: (" << currentRow << ", " << currentColumn << ")" << endl;
         cout << "Current elevation: " << currentElev << endl;
+
+        selected_coords.push_back({ currentRow, currentColumn });
     }
 
-
+    return selected_coords;
 }
 
 int main()
 {
-	auto arr = load_array_vec();
-	std::vector<std::pair<int, int>> selected_points = { {0, 0}, {1, 1}, {0, 2}, {0, 3}, {2, 4} };
-	
-	std::cout << "Total Cost: " << calculate_path_cost(arr, selected_points) << std::endl;
-	print_coords(selected_points);
+    auto map = load_array_vec();
+    std::vector<std::pair<int, int>> selected_cords = sen1A(map);
+
+    std::cout << "\n Total Path cost: " << calculate_path_cost(map, selected_cords) << std::endl;
 	
 }
