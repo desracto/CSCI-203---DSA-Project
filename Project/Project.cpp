@@ -60,7 +60,6 @@ std::vector<std::vector<int>> load_array_vec()
 		std::cout << "EXCEPTION: " << e.what();
 		return arr;
 	}
-
 }
 
 std::vector<int> load_array_1d()
@@ -91,6 +90,7 @@ std::vector<int> load_array_1d()
 
 int main()
 {
+	/*
 	try {
 		//int (*arr)[844] = load_array_2D();
 		std::vector<std::vector<int>> arr = load_array_vec();
@@ -103,4 +103,13 @@ int main()
 	{
 		std::cout << e.what();
 	}
+	*/
+
+
+
+	std::vector<std::pair<int, int>> arr_of_points = { {1, 2}, {3, 4} };
+
+
+	std::cout << arr_of_points[1].first;
 }
+
