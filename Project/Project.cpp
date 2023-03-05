@@ -32,14 +32,21 @@ std::vector<std::vector<int>> load_array_vec()
 	}
 }
 
-void print_array(std::vector<std::vector<int>>& arr)
+void print_array(std::vector<std::vector<int>>& arr, const std::vector<std::pair<int, int>>& selected_points)
 {
+	int i = 0;
 	for (int r = 0; r < arr.size(); r++)
 	{
 		for (int c = 0; c < arr[r].size(); c++)
 		{
-			std::cout << arr[r][c] << std::endl;
+			if (r == selected_points[i].first && c == selected_points[i].second)
+			{
+				std::cout << " | " << arr[r][c] << " | ";
+				continue;
+			}
+			std::cout << arr[r][c] << "  ";
 		}
+		std::cout << std::endl;
 	}
 }
 
