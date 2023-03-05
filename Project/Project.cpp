@@ -10,7 +10,7 @@ int (*load_array_2D())[844]
 {
 	std::fstream file("F:\\Programs\\Onedrive\\OneDrive - University of Wollongong\\Studies\\2023 Winter - 203, 317, 214\\CSCI 203\\Assignment\\Assignment 2\\map_844x480.dat", std::ios::in);
 
-	int(*arr)[844] = new int[480][844];
+	int (*arr)[844] = new int[480][844];
 	std::string word;
 	try 
 	{
@@ -18,9 +18,9 @@ int (*load_array_2D())[844]
 		// Array needs to be row by column
 		// This transposes the file automatically as it will 
 		// select a column first then incremet row by row
-		for (int c = 0; c < 844; c++)
+		for (int r = 0; r < 480; r++)
 		{
-			for (int r = 0; r < 480; r++)
+			for (int c = 0; c < 844; c++)
 			{
 				file >> word;
 				arr[r][c] = stoi(word);
@@ -44,9 +44,9 @@ std::vector<std::vector<int>> load_array_vec()
 
 	try
 	{
-		for (int c = 0; c < 844; c++)
+		for (int r = 0; r < 480; r++)
 		{
-			for (int r = 0; r < 480; r++)
+			for (int c = 0; c < 844; c++)
 			{
 				file >> word;
 				arr[r][c] = stoi(word);
@@ -72,9 +72,9 @@ std::vector<int> load_array_1d()
 
 	try
 	{
-		for (int c = 0; c < 844; c++)
+		for (int r = 0; r < 480; r++)
 		{
-			for (int r = 0; r < 480; r++)
+			for (int c = 0; c < 844; c++)
 			{
 				file >> word;
 				arr[WIDTH * r + c] = stoi(word);
@@ -89,15 +89,15 @@ std::vector<int> load_array_1d()
 	}
 }
 
-
 int main()
 {
 	try {
 		//int (*arr)[844] = load_array_2D();
-		//std::vector<std::vector<int>> arr = load_array_vec();
-		std::vector<int> arr = load_array_1d();
+		std::vector<std::vector<int>> arr = load_array_vec();
+		std::cout << arr[0][0];
 
-		std::cout << arr[844*479+843]; // ignore warning. trust
+		//std::vector<int> arr2 = load_array_1d();
+		//std::cout << arr2[844*479+843]; // ignore warning. trust
 	}
 	catch (std::exception& e)
 	{
