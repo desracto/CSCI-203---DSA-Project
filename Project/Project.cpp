@@ -6,7 +6,6 @@
 #include <istream>
 #include <array>
 
-
 std::vector<std::vector<int>> load_array_vec()
 {
 	std::fstream file("F:\\Programs\\Onedrive\\OneDrive - University of Wollongong\\Studies\\2023 Winter - 203, 317, 214\\CSCI 203\\Assignment\\Assignment 2\\map_844x480.dat", std::ios::in);
@@ -31,11 +30,6 @@ std::vector<std::vector<int>> load_array_vec()
 		std::cout << "EXCEPTION: " << e.what();
 		return arr;
 	}
-}
-
-void test()
-{
-
 }
 
 int main()
