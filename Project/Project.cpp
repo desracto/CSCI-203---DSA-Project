@@ -4,51 +4,47 @@
 #include <string>
 #include <sstream>
 #include <istream>
+#include <array>
 
-// using namespace std;
-using std::cout;
-
-void file_reader()
+int (*load_array_2D())[844]
 {
 	std::fstream file("F:\\Programs\\Onedrive\\OneDrive - University of Wollongong\\Studies\\2023 Winter - 203, 317, 214\\CSCI 203\\Assignment\\Assignment 2\\map_844x480.dat", std::ios::in);
-	std::vector<int> arr;
-	std::string word;
 
-	try
+	int(*arr)[844] = new int[480][844];
+	std::string word;
+	try 
 	{
-		while (!file.eof())
+		// File is column by row
+		// Array needs to be row by column
+		// This transposes the file automatically as it will 
+		// select a column first then incremet row by row
+		for (int c = 0; c < 844; c++)
 		{
-			file >> word;
-			arr.push_back(stoi(word));
+			for (int r = 0; r < 480; r++)
+			{
+				file >> word;
+				arr[r][c] = stoi(word);
+			}
 		}
+		return arr;
 	}
-	catch (std::exception e)
+	catch (std::exception& e)
 	{
 		std::cout << e.what();
+		return arr;
 	}
-	
-	for (int i = 0; i < arr.size(); i++)
-	{
-		std::cout << arr[i];
-	}
-}
 
-void convert_to_array()
-{
-	std::fstream file("map_844x480.dat", std::ios::in);
-	std::vector<std::vector<int>> arr;
-
-	int i, j;
-
-	std::string word;
-	while (!file.eof())
-	{
-		file >> word;
-	}
-	std::cout << word;
 }
 
 int main()
 {
-	file_reader();
+	try {
+		int (*arr)[844] = load_array_2D();
+
+		std::cout << arr[479][843]; // ignore warning. trust
+	}
+	catch (std::exception& e)
+	{
+		std::cout << e.what();
+	}
 }
