@@ -33,11 +33,6 @@ std::vector<std::vector<int>> load_array_vec()
 	}
 }
 
-void test()
-{
-
-}
-
 int main()
 {
 
