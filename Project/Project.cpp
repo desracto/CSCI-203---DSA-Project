@@ -34,26 +34,6 @@ std::vector<std::vector<int>> load_array_vec()
 
 int main()
 {
-	/*
-	try {
-		//int (*arr)[844] = load_array_2D();
-		std::vector<std::vector<int>> arr = load_array_vec();
-		std::cout << arr[0][0];
 
-		//std::vector<int> arr2 = load_array_1d();
-		//std::cout << arr2[844*479+843]; // ignore warning. trust
-	}
-	catch (std::exception& e)
-	{
-		std::cout << e.what();
-	}
-	*/
-
-
-
-	std::vector<std::pair<int, int>> arr_of_points = { {1, 2}, {3, 4} };
-
-
-	std::cout << arr_of_points[1].first;
 }
 
