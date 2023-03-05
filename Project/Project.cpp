@@ -5,6 +5,7 @@
 
 std::vector<std::vector<int>> load_array_vec()
 {
+
 	std::ifstream file("map_844x480.dat");
 	std::vector<std::vector<int>> arr(480, std::vector<int>(844)); // Row count, column count
 	std::string word;
