@@ -2,13 +2,10 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <sstream>
-#include <istream>
-#include <array>
 
 std::vector<std::vector<int>> load_array_vec()
 {
-	std::fstream file("map_844x480.dat", std::ios::in);
+	std::ifstream file("map_844x480.dat");
 	std::vector<std::vector<int>> arr(480, std::vector<int>(844)); // Row count, column count
 	std::string word;
 
@@ -30,6 +27,8 @@ std::vector<std::vector<int>> load_array_vec()
 		std::cout << "EXCEPTION: " << e.what();
 		return arr;
 	}
+  
+  file.close();
 }
 
 void print_array(std::vector<std::vector<int>>& arr, const std::vector<std::pair<int, int>>& selected_points)
