@@ -32,6 +32,17 @@ std::vector<std::vector<int>> load_array_vec()
 	}
 }
 
+void print_array(std::vector<std::vector<int>>& arr)
+{
+	for (int r = 0; r < arr.size(); r++)
+	{
+		for (int c = 0; c < arr[r].size(); c++)
+		{
+			std::cout << arr[r][c] << std::endl;
+		}
+	}
+}
+
 int main()
 {
 
