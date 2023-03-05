@@ -2,102 +2,47 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <sstream>
-#include <istream>
 
-// using namespace std;
-using std::cout;
-
-void file_reader1()
+std::vector<std::vector<int>> load_array_vec()
 {
-	std::fstream file("C:\\Users\\Dell i7\\OneDrive - University of Wollongong\\CSCI-203\\Assignment 2\\map_844x480.dat", std::ios::in);
-	std::vector<int> arr;
-	std::string word;
-
+	// make sure to change the path
+  std::ifstream file("F:\\Programs\\Onedrive\\OneDrive - University of Wollongong\\Studies\\2023 Winter - 203, 317, 214\\CSCI 203\\Assignment\\Assignment 2\\map_844x480.dat");
+	std::vector<std::vector<int>> arr(480, std::vector<int>(844)); // Row count, column count
+  
 	try
 	{
-		while (!file.eof())
+		for (int r = 0; r < 480; r++)
 		{
-			file >> word;
-			arr.push_back(stoi(word));
+			for (int c = 0; c < 844; c++)
+			{
+				file >> word;
+				arr[r][c] = stoi(word);
+			}
+		}
+
+		return arr;
+	}
+	catch (std::exception& e)
+	{
+		std::cout << "EXCEPTION: " << e.what();
+		return arr;
+	}
+  
+  file.close();
+}
+
+void print_array(std::vector<std::vector<int>>& arr)
+{
+	for (int r = 0; r < arr.size(); r++)
+	{
+		for (int c = 0; c < arr[r].size(); c++)
+		{
+			std::cout << arr[r][c] << std::endl;
 		}
 	}
-	catch (std::exception e)
-	{
-		std::cout << e.what();
-	}
-	
-	for (int i = 0; i < arr.size(); i++)
-	{
-		std::cout << arr[i];
-	}
 }
-
-void convert_to_array()
-{
-	std::fstream file("map_844x480.dat", std::ios::in);
-	std::vector<std::vector<int>> arr;
-
-	int i, j;
-
-	std::string word;
-	while (!file.eof())
-	{
-		file >> word;
-	}
-	std::cout << word;
-}
-
-
-const int ROWS = 480;
-const int COLS = 844;
-
-int fileReader() 
-{
-
-
-	// Open the input file
-
-	std::ifstream file("C:\\Users\\Dell i7\\OneDrive - University of Wollongong\\CSCI-203\\Assignment 2\\map_844x480.dat", std::ios::binary); //specifying file is binary
-
-	// Check if file was opened successfully
-
-	if (!file.is_open()) {
-		cout << "Failed to open file." << std::endl;
-		return 1;
-	}
-
-	// Read the input data into a 1D array
-
-	int data[ROWS * COLS];
-	file.read(reinterpret_cast<char*>(data), ROWS * COLS * sizeof(int));
-
-	// Close the input file
-
-	file.close();
-
-	// Transpose the row-major 1D array into a 2D array in column-major format
-
-	int map[COLS][ROWS];
-
-	for (int i = 0; i < ROWS; i++) 
-	{
-		for (int j = 0; j < COLS; j++) 
-		{
-			map[j][i] = data[i * COLS + j];
-		}
-	}
-
-	//	Map test by printing the value at row 0, column 0
-
-	cout << "Elevation at (0,0): " << map[0][0] << std::endl;
-
-	return 0;
-}
-
-
 
 int main()
 {
-	fileReader();
+
 }
