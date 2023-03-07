@@ -76,6 +76,7 @@ std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map
     // loop through each column
     for (int c = 1; c < COLS; c++) // starting from the second column
     {
+        std::cout << std::endl;
         // check FORWARD location
         int minDiff = abs(map[currentRow][c] - currentElev); // the difference between current location & forward location
         // DEBUG FORWARD: 
@@ -127,7 +128,7 @@ std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map
                 }
             }
         }
-        // No code for if forward and up/down match, priority given to up/down direction
+        // LIMITATION: No code for if forward and up/down match, priority given to up/down direction
 
         // update current location and elevation
         currentRow = rowChosen;
@@ -141,7 +142,6 @@ std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map
 
         selected_coords.push_back({ currentRow, currentColumn });
     }
-
     return selected_coords;
 }
 
