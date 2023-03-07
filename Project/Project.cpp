@@ -145,15 +145,6 @@ std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map
     return selected_coords;
 }
 
-void test1()
-{
-
-}
-void test2()
-{
-
-}
-
 int main()
 {
     auto map = load_array_vec();
