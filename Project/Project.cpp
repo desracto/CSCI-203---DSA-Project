@@ -33,20 +33,6 @@ std::vector<std::vector<int>> load_array_vec()
 	file.close();
 }
 
-int calculate_path_cost(const std::vector<std::vector<int>>& arr, const std::vector<std::pair<int, int>>& selected_points)
-{
-	int total_cost = 0;
-	for (int i = 0; i < selected_points.size() - 1; i++)
-	{
-		// DEBUG PRINTS - remove later 
-		//cout << "First Point: " << arr[selected_points[i].first][selected_points[i].second] << " Y = " << selected_points[i].second << endl;
-		//cout << "Second Point: " << arr[selected_points[i + 1].first][selected_points[i + 1].second] << " Y = " << selected_points[i + 1].second << endl;
-
-		total_cost += abs(arr[selected_points[i].first][selected_points[i].second] - arr[selected_points[i + 1].first][selected_points[i + 1].second]);
-	}
-	return total_cost;
-}
-
 void print_coords(const std::vector < std::pair<int, int>>& selected_coords)
 {
 	cout << "Coordinates: " << endl;
@@ -56,13 +42,14 @@ void print_coords(const std::vector < std::pair<int, int>>& selected_coords)
 	}
 }
 
-std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map)
+int  sen1A(const std::vector<std::vector<int>>& map)
 {
     // Possible change: Check if matrix is square.
 
-    std::vector<std::pair<int, int>> selected_coords;
     const int ROWS = map.size();
     const int COLS = map[0].size();
+
+    int totalCost = 0;
 
     int currentRow = 2;
     int currentColumn = 0; // left most starting column
@@ -133,23 +120,45 @@ std::vector<std::pair<int, int>>  sen1A(const std::vector<std::vector<int>>& map
         // update current location and elevation
         currentRow = rowChosen;
         currentColumn = c;
+
+        // std::cout << "Subtracting: " << currentElev << " " << map[currentRow][currentColumn] << std::endl;
+        
+        totalCost += abs(currentElev - map[currentRow][currentColumn]);
+
         currentElev = map[currentRow][currentColumn];
 
         // display current location and elevation
         cout << "Column " << c << ":\n";
         cout << "Current location: (" << currentRow << ", " << currentColumn << ")" << endl;
         cout << "Current elevation: " << currentElev << endl;
-
-        selected_coords.push_back({ currentRow, currentColumn });
     }
-    return selected_coords;
+    return totalCost;
 }
 
 int main()
 {
     auto map = load_array_vec();
-    std::vector<std::pair<int, int>> selected_cords = sen1A(map);
+    int cost = sen1A(map);
 
-    std::cout << "\n Total Path cost: " << calculate_path_cost(map, selected_cords) << std::endl;
-	
+    std::cout << "\n total path cost: " << cost << std::endl;
+
 }
+
+// Code Explanation for sen1A()
+/*
+    We define a constant int of rows and columns of the array size.
+    The starting coordinate is predetermined to be (2, 0). We set the currentElv to the start.
+
+    The minimum absolute difference of forward, upward and downward is chosen.
+
+    The loop begins from the 2nd column until the final column. 
+    At each iteration of the loop, we first take the forward difference as min. The forward coordinate is always [i][j+1].
+    
+    Then we check if there is a row above Betty's current location. If there is, we check upward difference [i-1][j+1]
+    We then compare it to the minimum difference which is the forward difference as of right now. If it's lower than forward, minimum difference is now the upward difference.
+    
+    Then we check if there is a row below Betty's current location. If there is, we check the downward difference [i+1][j+1].
+    We then coompare it to the minimum difference, which is the upward difference as of right now. If it's lower than upward, minimum difference is now the downward difference.
+
+    If both, upward and downward are equal, a coin toss is flipped. If its 0, the upward direction is chosen. If it's 1, the downward direction is chosen.
+*/
