@@ -11,7 +11,6 @@ std::vector<std::vector<int>> load_array_vec()
 
 	std::ifstream file("map_844x480.dat");
 	std::vector<std::vector<int>> arr(480, std::vector<int>(844)); // Row count, column count
-	std::string word;
 
 	try
 	{
@@ -19,8 +18,7 @@ std::vector<std::vector<int>> load_array_vec()
 		{
 			for (int c = 0; c < 844; c++)
 			{
-				file >> word;
-				arr[r][c] = stoi(word);
+                file >> arr[r][c];
 			}
 		}
 	}
@@ -29,8 +27,8 @@ std::vector<std::vector<int>> load_array_vec()
 		cout << "EXCEPTION: " << e.what();
 	}
 
-	return arr;
-	file.close();
+    file.close();
+    return arr;
 }
 
 void print_coords(const std::vector < std::pair<int, int>>& selected_coords)
@@ -42,7 +40,7 @@ void print_coords(const std::vector < std::pair<int, int>>& selected_coords)
 	}
 }
 
-int  sen1A(const std::vector<std::vector<int>>& map)
+int  sen1A(const std::vector<std::vector<int>>& map, int startRow, int startColumn)
 {
     // Possible change: Check if matrix is square.
 
@@ -51,8 +49,8 @@ int  sen1A(const std::vector<std::vector<int>>& map)
 
     int totalCost = 0;
 
-    int currentRow = 2;
-    int currentColumn = 0; // left most starting column
+    int currentRow = startRow;
+    int currentColumn = startColumn; // left most starting column
     int currentElev = map[currentRow][currentColumn]; // initial elevation
 
     // Print starting point (location --> (row, column)) and elevation
@@ -63,7 +61,6 @@ int  sen1A(const std::vector<std::vector<int>>& map)
     // loop through each column
     for (int c = 1; c < COLS; c++) // starting from the second column
     {
-        std::cout << std::endl;
         // check FORWARD location
         int minDiff = abs(map[currentRow][c] - currentElev); // the difference between current location & forward location
         // DEBUG FORWARD: 
@@ -121,8 +118,7 @@ int  sen1A(const std::vector<std::vector<int>>& map)
         currentRow = rowChosen;
         currentColumn = c;
 
-        // std::cout << "Subtracting: " << currentElev << " " << map[currentRow][currentColumn] << std::endl;
-        
+        // cout << "Subtracting: " << currentElev << " " << map[currentRow][currentColumn] << endl;
         totalCost += abs(currentElev - map[currentRow][currentColumn]);
 
         currentElev = map[currentRow][currentColumn];
@@ -130,7 +126,7 @@ int  sen1A(const std::vector<std::vector<int>>& map)
         // display current location and elevation
         cout << "Column " << c << ":\n";
         cout << "Current location: (" << currentRow << ", " << currentColumn << ")" << endl;
-        cout << "Current elevation: " << currentElev << endl;
+        cout << "Current elevation: " << currentElev << endl << endl;
     }
     return totalCost;
 }
@@ -138,9 +134,9 @@ int  sen1A(const std::vector<std::vector<int>>& map)
 int main()
 {
     auto map = load_array_vec();
-    int cost = sen1A(map);
+    int cost = sen1A(map, 3, 0);
 
-    std::cout << "\n total path cost: " << cost << std::endl;
+    std::cout << "\n Total path cost: " << cost << std::endl;
 
 }
 
