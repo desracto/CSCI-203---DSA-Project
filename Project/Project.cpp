@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <time.h>
+#include <random>
 
 using std::cout;
 using std::endl;
@@ -259,8 +260,46 @@ void sen1B(const std::vector<std::vector<int>>& map)
     std::cout << std::endl;
 }
 
-void sen2A()
+void sen2(const std::vector<std::vector<int>>& map)
 {
+    int col = 0;
+    int nextCol = 1;
+    std::vector<std::pair<std::pair<int, int>, int>> best_coords;
+    int min_difference = INT_MAX;
+
+    for (int r = 0; r < map.size(); r++)
+    {
+        // DEBUG
+        //std::cout << "Starting point: " << map[r][col];
+        //std::cout << " differences: ";
+        for (int nextRow = 0; nextRow < map.size(); nextRow++)
+        {
+            int diff = abs(map[r][col] - map[nextRow][nextCol]);
+            std::cout << diff << " ";
+
+            // new min
+            if (diff < min_difference)
+            {
+                min_difference = diff;
+                best_coords.clear();
+                best_coords.push_back({ {nextRow, nextCol}, diff });
+            }
+            // same diff
+            else if (diff == min_difference)
+            {
+                best_coords.push_back({ {nextRow, nextCol}, diff });
+            }
+
+        }
+        std::cout << std::endl;
+
+        // get random index
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distr(0, best_coords.size());
+        std::cout << distr(gen);
+    }
+
 
 }
 
@@ -269,38 +308,46 @@ int main()
 {
     auto map = load_array_vec();
     bool run = true;
-    while (run)
-    {
-        std::cout << "Choose which scenario to run : " << std::endl;
-        std::cout << "1. Scenario 1-A";
-        std::cout << "\n2. Scenario 1-B";
-        std::cout << "\n3. Scenario 2";
-        std::cout << "\n9. Exit";
-        std::cout << "\nChoice: ";
+    //while (run)
+    //{
+    //    std::cout << "Choose which scenario to run : " << std::endl;
+    //    std::cout << "1. Scenario 1-A";
+    //    std::cout << "\n2. Scenario 1-B";
+    //    std::cout << "\n3. Scenario 2";
+    //    std::cout << "\n9. Exit";
+    //    std::cout << "\nChoice: ";
 
-        int choice;
-        std::cin >> choice;
+    //    int choice;
+    //    std::cin >> choice;
 
-        if (choice == 1)
-        {
-            std::cout << "Choose your starting coordinate";
-            std::cout << "\nX: ";
-            int x = 0;
-            std::cin >> x;
-            std::cout << "\nY: ";
-            int y = 0;
-            std::cin >> y;
-            sen1A(map, x, y);
-        }
-        else if (choice == 2)
-        {
-            sen1B(map);
+    //    if (choice == 1)
+    //    {
+    //        std::cout << "Choose your starting coordinate";
+    //        std::cout << "\nX: ";
+    //        int x = 0;
+    //        std::cin >> x;
+    //        std::cout << "\nY: ";
+    //        int y = 0;
+    //        std::cin >> y;
+    //        sen1A(map, x, y);
+    //    }
+    //    else if (choice == 2)
+    //    {
+    //        sen1B(map);
 
-        }
-        else if (choice == 9)
-        {
-            run = false;
-        }
-    }
+    //    }
+    //    else if (choice == 9)
+    //    {
+    //        run = false;
+    //    }
+    //}
+
+    std::vector<std::vector<int>> arr =
+    { {0, 30, 2, 3, 4},
+      {5, 6, 7, 8, 9},
+      {10, 11, 12, 13}
+    };
+
+    sen2(arr);
 }
 
