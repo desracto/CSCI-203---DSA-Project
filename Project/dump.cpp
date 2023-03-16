@@ -85,6 +85,12 @@ void store_array(std::vector<std::vector<int>>& arr, const std::vector<int>& sel
 		file << std::endl;
 	}
 }
+
+
+
+
+			// std::cout << "Comparing upward: " << map[currentRow - 1][c] << " Difference: " << upwardDiff << std::endl;
+
 */
 
 // ALL FUNCTIONS HERE ARE DUMPED HERE.
