@@ -308,46 +308,37 @@ int main()
 {
     auto map = load_array_vec();
     bool run = true;
-    //while (run)
-    //{
-    //    std::cout << "Choose which scenario to run : " << std::endl;
-    //    std::cout << "1. Scenario 1-A";
-    //    std::cout << "\n2. Scenario 1-B";
-    //    std::cout << "\n3. Scenario 2";
-    //    std::cout << "\n9. Exit";
-    //    std::cout << "\nChoice: ";
+    while (run)
+    {
+       std::cout << "Choose which scenario to run : " << std::endl;
+       std::cout << "1. Scenario 1-A";
+       std::cout << "\n2. Scenario 1-B";
+       std::cout << "\n3. Scenario 2";
+       std::cout << "\n9. Exit";
+       std::cout << "\nChoice: ";
 
-    //    int choice;
-    //    std::cin >> choice;
+       int choice;
+       std::cin >> choice;
 
-    //    if (choice == 1)
-    //    {
-    //        std::cout << "Choose your starting coordinate";
-    //        std::cout << "\nX: ";
-    //        int x = 0;
-    //        std::cin >> x;
-    //        std::cout << "\nY: ";
-    //        int y = 0;
-    //        std::cin >> y;
-    //        sen1A(map, x, y);
-    //    }
-    //    else if (choice == 2)
-    //    {
-    //        sen1B(map);
-
-    //    }
-    //    else if (choice == 9)
-    //    {
-    //        run = false;
-    //    }
-    //}
-
-    std::vector<std::vector<int>> arr =
-    { {0, 30, 2, 3, 4},
-      {5, 6, 7, 8, 9},
-      {10, 11, 12, 13}
-    };
-
-    sen2(arr);
+       if (choice == 1)
+       {
+           std::cout << "Choose your starting coordinate";
+           std::cout << "\nX: ";
+           int x = 0;
+           std::cin >> x;
+           std::cout << "\nY: ";
+           int y = 0;
+           std::cin >> y;
+           sen1A(map, x, y);
+       }
+       else if (choice == 2)
+       {
+           sen1B(map);
+       }
+       else if (choice == 9)
+       {
+           run = false;
+       }
+    }
 }
 
